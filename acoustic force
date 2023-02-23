@@ -22,7 +22,7 @@ def calc_levitation_force(amplitude, wavelength, radius, rho, c):
 
 
 
-
+*******************************************************************************************************
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -69,6 +69,37 @@ plt.ylabel('Levitation force (N)')
 plt.title('Levitation force vs sphere radius')
 plt.show()
 
+***************************************************************************************************************
 
+import numpy as np
+
+# Define system parameters
+f = 40e3  # Frequency (Hz)
+c = 343  # Speed of sound (m/s)
+rho = 1.2  # Density of air (kg/m^3)
+a = 0.5e-3  # Radius of sphere (m)
+V = (4 / 3) * np.pi * a**3  # Volume of sphere (m^3)
+P0 = 1e5  # Sound pressure amplitude (Pa)
+
+# Calculate wavelength
+lambda_ = c / f
+
+# Calculate wave number
+k = 2 * np.pi / lambda_
+
+# Calculate resonant frequency of sphere
+f_res = c / (2 * np.pi * a)
+
+# Print results
+print('System parameters:')
+print(f'Frequency: {f} Hz')
+print(f'Speed of sound: {c} m/s')
+print(f'Density of air: {rho} kg/m^3')
+print(f'Radius of sphere: {a} m')
+print(f'Volume of sphere: {V} m^3')
+print(f'Sound pressure amplitude: {P0} Pa')
+print(f'Wavelength: {lambda_} m')
+print(f'Wave number: {k} 1/m')
+print(f'Resonant frequency of sphere: {f_res} Hz')
 
 
