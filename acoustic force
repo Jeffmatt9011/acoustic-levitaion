@@ -1,0 +1,91 @@
+import numpy as np
+
+def calc_levitation_force(amplitude, wavelength, radius, rho, c):
+    """
+    Calculates the levitation force for a spherical object in an acoustic levitation system.
+    
+    Parameters:
+    amplitude (float): The amplitude of the standing wave.
+    wavelength (float): The wavelength of the standing wave.
+    radius (float): The radius of the levitated sphere.
+    rho (float): The density of the medium.
+    c (float): The speed of sound in the medium.
+    
+    Returns:
+    force (float): The levitation force.
+    """
+    k = 2 * np.pi / wavelength
+    P = 2 * rho * c * np.square(amplitude)
+    V = (4 / 3) * np.pi * np.power(radius, 3)
+    force = P * V * k / (2 * rho * np.square(c))
+    return force
+This code takes as input the amplitude and wavelength of the standing wave, the radius of the levitated sphere, and the density and speed of sound of the medium. It uses these values to calculate the levitation force on the sphere, assuming a spherical object and a single-axis standing wave.
+
+You can use this code by calling the calc_levitation_force function with the appropriate parameters for your system. Note that the units of the input parameters should be consistent (e.g. meters for length, kilograms per cubic meter for density, meters per second for speed of sound, etc.), and the output force will be in units of Newtons.
+
+Keep in mind that this code assumes a simplified model of the acoustic levitation system, and may not accurately predict the levitation force for more complex systems or geometries. It is always important to validate theoretical models with experimental data.
+
+
+
+
+jeffzz9955@icloud.com
+can you find python code for modeling acoustic levitation 
+Sure, here is an example of Python code that can be used to model the acoustic levitation of a small sphere in a standing wave field:
+
+python
+Copy code
+import numpy as np
+import matplotlib.pyplot as plt
+
+# Define parameters
+f = 40e3  # Frequency (Hz)
+c = 343  # Speed of sound (m/s)
+lambda_ = c / f  # Wavelength (m)
+k = 2 * np.pi / lambda_  # Wave number (1/m)
+rho = 1.2  # Density of air (kg/m^3)
+a = 0.5e-3  # Radius of sphere (m)
+V = (4 / 3) * np.pi * a**3  # Volume of sphere (m^3)
+P0 = 1e5  # Sound pressure amplitude (Pa)
+
+# Define grid
+L = lambda_ / 2  # Length of simulation box (m)
+N = 100  # Number of grid points
+dx = L / (N - 1)  # Grid spacing (m)
+x = np.linspace(0, L, N)  # Grid (m)
+
+# Initialize wave field
+P = np.zeros(N)
+
+# Calculate sound pressure field
+for n in range(1, 10):
+    An = (-1)**(n+1) * (4 * P0 / (n * np.pi)) * np.sin(n * np.pi * a / lambda_)
+    P += An * np.sin(n * np.pi * x / L)
+
+# Calculate force on sphere
+F = -4 * np.pi * a**3 * rho * c**2 * (P0**2 / (2 * rho * c**2)) * np.sin(k * a)**2
+
+# Plot results
+plt.figure()
+plt.plot(x, P)
+plt.xlabel('Position (m)')
+plt.ylabel('Sound pressure amplitude (Pa)')
+plt.title('Standing wave field')
+plt.show()
+
+plt.figure()
+plt.plot(a, F, 'o')
+plt.xlabel('Sphere radius (m)')
+plt.ylabel('Levitation force (N)')
+plt.title('Levitation force vs sphere radius')
+plt.show()
+This code models the standing wave field in a 1D space, and calculates the levitation force on a small sphere placed at the center of the standing wave field. The code assumes a single-axis standing wave, and a small sphere that is much smaller than the wavelength of the sound wave.
+
+The code calculates the sound pressure field by summing up the contributions from the first 10 harmonics of the standing wave. It then calculates the levitation force on the sphere using the formula derived in the theory section.
+
+The code outputs two plots: one showing the sound pressure amplitude as a function of position in the simulation box, and another showing the levitation force as a function of the sphere radius.
+
+Note that this code is a simplified model of an acoustic levitation system, and may not accurately predict the behavior of more complex systems or geometries. It is always important to validate theoretical models with experimental data.
+
+
+
+
